@@ -1,103 +1,166 @@
-import Image from "next/image";
+// src/app/page.tsx
+
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import { taoChapters } from "@data/taoChapters";
+import { Chapter } from "@components/Chapter";
+import { Credit } from "@components/Credit";
+
+const BATCH_SIZE = 5;
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
+  const loader = useRef<HTMLDivElement | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!loader.current) return;
+      if (loader.current.getBoundingClientRect().top < window.innerHeight) {
+        setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, taoChapters.length));
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tao Te Ching - Complete Collection with AI Interpretations",
+    "description": "Complete collection of all 81 chapters of the Tao Te Ching by Laozi with modern AI interpretations from ChatGPT, Claude, and Grok",
+    "url": "https://taotechingai.com",
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": taoChapters.length,
+      "itemListElement": taoChapters.slice(0, visibleCount).map((chapter, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "item": {
+          "@type": "Article",
+          "@id": `https://taotechingai.com#chapter-${chapter.number}`,
+          "headline": `Tao Te Ching Chapter ${chapter.number}`,
+          "description": `Chapter ${chapter.number} of the Tao Te Ching by Laozi with AI interpretations`,
+          "articleSection": "Philosophy",
+          "inLanguage": "en-US",
+          "isPartOf": {
+            "@type": "Book",
+            "name": "Tao Te Ching",
+            "author": {
+              "@type": "Person",
+              "name": "Laozi"
+            }
+          }
+        }
+      }))
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://taotechingai.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tao Te Ching Chapters",
+          "item": "https://taotechingai.com#chapters"
+        }
+      ]
+    }
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <header className="header" role="banner">
+        <div className="container">
+          <hgroup>
+            <h1 className="main-title">Tao Te Ching</h1>
+            <h2 className="subtitle">Ancient Wisdom by Laozi (6th century BC)</h2>
+            <p className="subtitle">Gia-Fu Feng & Jane English translation with modern AI interpretations from ChatGPT, Claude, and Grok</p>
+          </hgroup>
+          
+          <nav className="nav" role="navigation" aria-label="Main navigation">
+            <a href="#chapters" aria-describedby="chapters-desc">
+              <span>Chapters</span>
+              <span id="chapters-desc" className="sr-only">Browse all 81 chapters of the Tao Te Ching</span>
+            </a>
+            <a href="#about" aria-describedby="about-desc">
+              <span>About</span>
+              <span id="about-desc" className="sr-only">Learn about this translation and AI interpretations</span>
+            </a>
+            <a href="https://www.bookoftao.com/translations/tao-te-ching-translation-by-gia-fu-feng-and-jane-english" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-describedby="source-desc">
+              <span>Source</span>
+              <span id="source-desc" className="sr-only">View the original translation source</span>
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <main role="main">
+        <div className="container">
+          <section id="about" aria-labelledby="about-heading">
+            <h2 id="about-heading" className="sr-only">About This Collection</h2>
+            <p className="sr-only">
+              This collection presents all 81 chapters of the Tao Te Ching, the fundamental text of Daoism written by the ancient Chinese philosopher Laozi. 
+              Each chapter includes the original text from the acclaimed 1972 translation by Gia-Fu Feng and Jane English, 
+              accompanied by modern interpretations from leading AI models including ChatGPT, Claude, and Grok.
+            </p>
+          </section>
+
+          <section id="chapters" aria-labelledby="chapters-heading">
+            <h2 id="chapters-heading" className="sr-only">Tao Te Ching Chapters</h2>
+            <div role="feed" aria-label="Tao Te Ching chapters with AI interpretations">
+              {taoChapters.slice(0, visibleCount).map((chapter) => (
+                <Chapter
+                  key={chapter.number}
+                  number={chapter.number}
+                  text={chapter.originalText}
+                  explanations={{
+                    chatgpt: chapter.explanationChatGPT,
+                    grok: chapter.explanationGrok,
+                    claude: chapter.explanationClaude,
+                  }}
+                />
+              ))}
+            </div>
+            <div ref={loader} aria-hidden="true" />
+            
+            {visibleCount < taoChapters.length && (
+              <div className="loading-indicator" aria-live="polite">
+                <p>Loading more chapters... ({visibleCount} of {taoChapters.length} loaded)</p>
+              </div>
+            )}
+          </section>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="footer" role="contentinfo">
+        <div className="container">
+          <Credit />
+          <nav className="footer-links" role="navigation" aria-label="Footer navigation">
+            <a href="#about">About</a>
+            <span aria-hidden="true"> | </span>
+            <a href="#chapters">Chapters</a>
+            <span aria-hidden="true"> | </span>
+            <a href="https://www.bookoftao.com/translations/tao-te-ching-translation-by-gia-fu-feng-and-jane-english" 
+               target="_blank" 
+               rel="noopener noreferrer">
+              Source Translation
+            </a>
+          </nav>
+        </div>
       </footer>
-    </div>
+    </>
   );
 }

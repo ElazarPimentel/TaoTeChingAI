@@ -1,0 +1,713 @@
+// src/app/globals.scss
+
+$color-background: #1a1a1a;
+$color-header-background: #2a2a2a;
+$color-nav-button-background: #222222;
+$color-nav-button-shadow: #606060;
+$color-button-background: #3a3a3a;
+$color-card: #333333;
+$color-primary: #d0d0d0;
+$color-text: #ffffff;
+$color-text-highlight: #e8e8e8;
+$color-accent: #808080;
+$color-border: #ffffff;
+$color-chapter-background: #404040;
+$color-text-muted: rgba(255, 255, 255, 0.85);
+
+$font-main: 'Inter', sans-serif;
+
+// Breakpoints (Mobile First)
+$breakpoint-sm: 480px;   // Small phones
+$breakpoint-md: 768px;   // Tablets
+$breakpoint-lg: 1024px;  // Small laptops
+$breakpoint-xl: 1280px;  // Normal laptops
+$breakpoint-xxl: 1536px; // PCs/Large screens
+
+// Mixins for responsive design
+@mixin respond-to($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Base styles (Mobile First - 320px+)
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; // Base font size for rem calculations
+}
+
+body {
+  background: $color-background;
+  font-size: 0.875rem; // 14px on mobile
+  color: $color-text;
+  font-family: $font-main;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.4;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1rem; // 16px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.125rem; // 18px on tablets+
+    line-height: 1.5;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.25rem; // 20px on small laptops+
+    line-height: 1.6;
+  }
+}
+
+// Container (Mobile First)
+.container {
+  width: 100%;
+  padding: 0 1rem; // 16px padding on mobile
+  margin: 0 auto;
+  
+  @include respond-to($breakpoint-sm) {
+    padding: 0 1.5rem; // 24px padding on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    max-width: 768px;
+    padding: 0 2rem; // 32px padding on tablets+
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    max-width: 1024px;
+    padding: 0 2.5rem; // 40px padding on small laptops+
+  }
+  
+  @include respond-to($breakpoint-xl) {
+    max-width: 1200px;
+    padding: 0 3rem; // 48px padding on normal laptops+
+  }
+  
+  @include respond-to($breakpoint-xxl) {
+    max-width: 1400px;
+    padding: 0 4rem; // 64px padding on PCs+
+  }
+}
+
+// Header (Mobile First)
+.header {
+  background: $color-header-background;
+  padding: 1rem 0; // 16px vertical padding on mobile
+  text-align: center;
+  border-radius: 0.5rem; // Smaller radius on mobile
+  margin: 0.5rem 0;
+  
+  @include respond-to($breakpoint-sm) {
+    padding: 1.25rem 0; // 20px vertical padding on small phones+
+    border-radius: 0.75rem;
+    margin: 0.75rem 0;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    padding: 1.5rem 0; // 24px vertical padding on tablets+
+    border-radius: 1rem;
+    margin: 1rem 0;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    padding: 2rem 0; // 32px vertical padding on small laptops+
+  }
+  
+  .nav {
+    display: flex;
+    flex-direction: column; // Stack vertically on mobile
+    gap: 0.5rem;
+    margin-top: 1rem;
+    align-items: center;
+    
+    @include respond-to($breakpoint-sm) {
+      flex-direction: row; // Horizontal on small phones+
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    @include respond-to($breakpoint-md) {
+      gap: 0.75rem;
+    }
+    
+    @include respond-to($breakpoint-lg) {
+      gap: 1rem;
+    }
+    
+    a {
+      color: $color-text-highlight;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      background: $color-nav-button-background;
+      border-radius: 0.5rem; // Smaller radius on mobile
+      border: 1px solid $color-border; // Thinner border on mobile
+      box-shadow: 0 1px 2px $color-nav-button-shadow;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-size: 0.875rem; // Smaller text on mobile
+      min-width: 120px; // Consistent button width
+      text-align: center;
+      
+      @include respond-to($breakpoint-sm) {
+        font-size: 1rem;
+        border-radius: 0.75rem;
+        border: 2px solid $color-border;
+        box-shadow: 0 2px 4px $color-nav-button-shadow;
+      }
+      
+      @include respond-to($breakpoint-md) {
+        padding: 0.75rem 1.25rem;
+        border-radius: 1rem;
+        min-width: 140px;
+      }
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px $color-nav-button-shadow;
+        
+        @include respond-to($breakpoint-sm) {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 6px $color-nav-button-shadow;
+        }
+      }
+      
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 2px $color-nav-button-shadow;
+      }
+      
+      span:first-child {
+        display: inline;
+      }
+    }
+  }
+}
+
+// Main content
+main {
+  padding: 0.5rem 0; // Minimal padding on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    padding: 0.75rem 0;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    padding: 1rem 0;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    padding: 1.5rem 0;
+  }
+}
+
+// Typography (Mobile First)
+.main-title {
+  text-align: center;
+  color: $color-text-highlight;
+  font-size: 1.5rem; // 24px on mobile
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.75rem; // 28px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 2rem; // 32px on tablets+
+    margin-bottom: 0.75rem;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 2.25rem; // 36px on small laptops+
+    margin-bottom: 1rem;
+  }
+  
+  @include respond-to($breakpoint-xl) {
+    font-size: 2.5rem; // 40px on normal laptops+
+  }
+}
+
+.subtitle {
+  text-align: center;
+  color: $color-text-muted;
+  font-size: 0.875rem; // 14px on mobile
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1rem; // 16px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.125rem; // 18px on tablets+
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.25rem; // 20px on small laptops+
+    margin-bottom: 2rem;
+  }
+}
+
+// Chapter container (Mobile First)
+.chapter-container {
+  background: $color-card;
+  border-radius: 0.5rem; // Smaller radius on mobile
+  margin: 0.75rem 0; // Smaller margin on mobile
+  padding: 0.75rem; // Smaller padding on mobile
+  border: 1px solid $color-border; // Thinner border on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 2px solid $color-border;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    border-radius: 1rem;
+    margin: 1.25rem 0;
+    padding: 1.25rem;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+  }
+  
+  @include respond-to($breakpoint-xl) {
+    margin: 2rem 0;
+    padding: 2rem;
+  }
+  
+  header {
+    margin-bottom: 1rem;
+    
+    @include respond-to($breakpoint-md) {
+      margin-bottom: 1.25rem;
+    }
+  }
+}
+
+.chapter-title {
+  color: $color-primary;
+  font-size: 1.125rem; // 18px on mobile
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.25rem; // 20px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.375rem; // 22px on tablets+
+    margin-bottom: 1rem;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.5rem; // 24px on small laptops+
+  }
+}
+
+.chapter-text {
+  font-size: 0.875rem; // 14px on mobile
+  line-height: 1.4;
+  padding: 0.75rem; // Smaller padding on mobile
+  background: $color-chapter-background;
+  border-radius: 0.5rem; // Smaller radius on mobile
+  border: 1px solid $color-border; // Thinner border on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1rem; // 16px on small phones+
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid $color-border;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.125rem; // 18px on tablets+
+    line-height: 1.5;
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.25rem; // 20px on small laptops+
+    line-height: 1.6;
+    padding: 1.5rem;
+  }
+}
+
+// AI Explanations (Mobile First)
+.explanations-title {
+  color: $color-primary;
+  font-size: 1rem; // 16px on mobile
+  margin: 0.75rem 0;
+  font-weight: 600;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.125rem; // 18px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.25rem; // 20px on tablets+
+    margin: 1rem 0;
+  }
+}
+
+.ai-explanation {
+  border: 1px solid $color-border; // Thinner border on mobile
+  border-radius: 0.5rem; // Smaller radius on mobile
+  margin: 0.5rem 0;
+  padding: 0.5rem; // Smaller padding on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    border: 2px solid $color-border;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+}
+
+.collapse-toggle {
+  cursor: pointer;
+  background: $color-chapter-background;
+  padding: 0.5rem;
+  font-size: 0.875rem; // Smaller text on mobile
+  font-weight: 500;
+  border-radius: 0.5rem; // Smaller radius on mobile
+  border: 1px solid $color-border; // Thinner border on mobile
+  width: 100%;
+  text-align: left;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid $color-border;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.125rem;
+    border-radius: 1rem;
+    padding: 0.75rem;
+  }
+  
+  &:hover {
+    background: lighten($color-chapter-background, 5%);
+  }
+  
+  &:focus {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+.ai-explanation-text {
+  font-size: 0.875rem; // 14px on mobile
+  padding: 0.5rem;
+  line-height: 1.4;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1rem; // 16px on small phones+
+    padding: 0.75rem;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.125rem; // 18px on tablets+
+    line-height: 1.5;
+    padding: 1rem;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.25rem; // 20px on small laptops+
+    line-height: 1.6;
+  }
+}
+
+// Heading hierarchy (Mobile First)
+h1, h2, h3, h4 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+h1 { 
+  font-size: 1.375rem; // 22px on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.5rem; // 24px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.75rem; // 28px on tablets+
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 2rem; // 32px on small laptops+
+  }
+}
+
+h2 { 
+  font-size: 1.25rem; // 20px on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.375rem; // 22px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.5rem; // 24px on tablets+
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.75rem; // 28px on small laptops+
+  }
+}
+
+h3 { 
+  font-size: 1.125rem; // 18px on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.25rem; // 20px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.375rem; // 22px on tablets+
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.5rem; // 24px on small laptops+
+  }
+}
+
+h4 { 
+  font-size: 1rem; // 16px on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1.125rem; // 18px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1.25rem; // 20px on tablets+
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    font-size: 1.375rem; // 22px on small laptops+
+  }
+}
+
+// Footer (Mobile First)
+.footer {
+  background: $color-header-background;
+  color: $color-text-highlight;
+  padding: 1rem 0;
+  text-align: center;
+  border-radius: 0.5rem; // Smaller radius on mobile
+  margin: 0.5rem 0;
+  
+  @include respond-to($breakpoint-sm) {
+    padding: 1.25rem 0;
+    border-radius: 0.75rem;
+    margin: 0.75rem 0;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    padding: 1.5rem 0;
+    border-radius: 1rem;
+    margin: 1rem 0;
+  }
+  
+  @include respond-to($breakpoint-lg) {
+    padding: 2rem 0;
+  }
+}
+
+.credit {
+  color: $color-text-muted;
+  font-size: 0.75rem; // 12px on mobile
+  margin-bottom: 0.5rem;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 0.875rem; // 14px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1rem; // 16px on tablets+
+    margin-bottom: 0.75rem;
+  }
+  
+  p {
+    margin: 0.25rem 0;
+    
+    @include respond-to($breakpoint-md) {
+      margin: 0.5rem 0;
+    }
+  }
+}
+
+.footer-links {
+  font-size: 0.75rem; // 12px on mobile
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 0.875rem; // 14px on small phones+
+  }
+  
+  @include respond-to($breakpoint-md) {
+    font-size: 1rem; // 16px on tablets+
+  }
+  
+  a {
+    color: $color-text-muted;
+    text-decoration: none;
+    margin: 0 0.25rem;
+    
+    @include respond-to($breakpoint-md) {
+      margin: 0 0.5rem;
+    }
+    
+    &:hover {
+      color: $color-text-highlight;
+      text-decoration: underline;
+    }
+  }
+  
+  span[aria-hidden="true"] {
+    color: $color-text-muted;
+    margin: 0 0.125rem;
+    
+    @include respond-to($breakpoint-md) {
+      margin: 0 0.25rem;
+    }
+  }
+}
+
+// Button component (Mobile First)
+.button {
+  display: inline-block;
+  background: $color-button-background;
+  color: $color-text-highlight;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem; // Smaller radius on mobile
+  border: 1px solid $color-border; // Thinner border on mobile
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem; // Smaller text on mobile
+  text-align: center;
+  transition: all 0.2s ease;
+  
+  @include respond-to($breakpoint-sm) {
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    border: 2px solid $color-border;
+  }
+  
+  @include respond-to($breakpoint-md) {
+    padding: 0.75rem 1.25rem;
+    border-radius: 1rem;
+  }
+  
+  &:hover {
+    background: lighten($color-button-background, 10%);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Focus styles for better accessibility
+*:focus {
+  outline: 2px solid $color-accent;
+  outline-offset: 2px;
+}
+
+// Print styles
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .header, .footer {
+    background: none;
+    border: 1px solid black;
+  }
+  
+  .nav {
+    display: none;
+  }
+}
+
+// Accessibility improvements
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 1rem;
+  color: $color-text-muted;
+  font-style: italic;
+  
+  @include respond-to($breakpoint-md) {
+    padding: 1.5rem;
+  }
+}
+
+// Improved focus indicators for better accessibility
+.collapse-toggle:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 2px;
+  background: lighten($color-chapter-background, 10%);
+}
+
+.nav a:focus-visible,
+.footer-links a:focus-visible {
+  outline: 3px solid $color-accent;
+  outline-offset: 2px;
+  background: lighten($color-nav-button-background, 10%);
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .chapter-container,
+  .ai-explanation,
+  .collapse-toggle {
+    border-width: 2px;
+    border-color: $color-text;
+  }
+  
+  .header,
+  .footer {
+    border: 2px solid $color-text;
+  }
+}
