@@ -87,23 +87,7 @@ export default function Home() {
             <p className="subtitle">Gia-Fu Feng & Jane English translation with modern AI interpretations from ChatGPT, Claude, and Grok</p>
           </hgroup>
           
-          <nav className="nav" role="navigation" aria-label="Main navigation">
-            <a href="#chapters" aria-describedby="chapters-desc">
-              <span>Chapters</span>
-              <span id="chapters-desc" className="sr-only">Browse all 81 chapters of the Tao Te Ching</span>
-            </a>
-            <a href="#about" aria-describedby="about-desc">
-              <span>About</span>
-              <span id="about-desc" className="sr-only">Learn about this translation and AI interpretations</span>
-            </a>
-            <a href="https://www.bookoftao.com/translations/tao-te-ching-translation-by-gia-fu-feng-and-jane-english" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               aria-describedby="source-desc">
-              <span>Source</span>
-              <span id="source-desc" className="sr-only">View the original translation source</span>
-            </a>
-          </nav>
+
         </div>
       </header>
 

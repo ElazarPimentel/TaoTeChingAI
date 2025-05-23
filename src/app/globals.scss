@@ -101,22 +101,64 @@ body {
   padding: 1rem 0; // 16px vertical padding on mobile
   text-align: center;
   border-radius: 0.5rem; // Smaller radius on mobile
-  margin: 0.5rem 0;
+  margin: 0;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #a0a0a0, #e0e0e0, #ffffff, #e0e0e0, #a0a0a0, transparent);
+    border-radius: 2px;
+    opacity: 0.8;
+    
+    @include respond-to($breakpoint-md) {
+      width: 60%;
+      height: 5px;
+      border-radius: 2.5px;
+    }
+    
+    @include respond-to($breakpoint-lg) {
+      width: 50%;
+      height: 6px;
+      border-radius: 3px;
+    }
+  }
   
   @include respond-to($breakpoint-sm) {
     padding: 1.25rem 0; // 20px vertical padding on small phones+
     border-radius: 0.75rem;
-    margin: 0.75rem 0;
+    margin: 0;
   }
   
   @include respond-to($breakpoint-md) {
     padding: 1.5rem 0; // 24px vertical padding on tablets+
     border-radius: 1rem;
-    margin: 1rem 0;
+    margin: 0;
   }
   
   @include respond-to($breakpoint-lg) {
     padding: 2rem 0; // 32px vertical padding on small laptops+
+  }
+  
+  hgroup {
+    margin-bottom: 0 !important;
+    
+    h1, h2, p {
+      margin: 0 !important;
+    }
+    
+    h2.subtitle {
+      margin-bottom: 0.125rem !important;
+    }
+    
+    p.subtitle:last-child {
+      margin-bottom: 0 !important;
+    }
   }
   
   .nav {
@@ -191,19 +233,8 @@ body {
 
 // Main content
 main {
-  padding: 0.5rem 0; // Minimal padding on mobile
-  
-  @include respond-to($breakpoint-sm) {
-    padding: 0.75rem 0;
-  }
-  
-  @include respond-to($breakpoint-md) {
-    padding: 1rem 0;
-  }
-  
-  @include respond-to($breakpoint-lg) {
-    padding: 1.5rem 0;
-  }
+  padding: 0.5rem 0 0 0; // 0.5rem top padding only
+  margin: 0; // Remove all margin
 }
 
 // Typography (Mobile First)
@@ -238,7 +269,7 @@ main {
   text-align: center;
   color: $color-text-muted;
   font-size: 0.875rem; // 14px on mobile
-  margin-bottom: 1rem;
+  margin-bottom: 0.125rem; // Minimal gap between subtitles
   line-height: 1.4;
   
   @include respond-to($breakpoint-sm) {
@@ -247,13 +278,25 @@ main {
   
   @include respond-to($breakpoint-md) {
     font-size: 1.125rem; // 18px on tablets+
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.25rem; // Minimal gap between subtitles
     line-height: 1.5;
   }
   
   @include respond-to($breakpoint-lg) {
     font-size: 1.25rem; // 20px on small laptops+
-    margin-bottom: 2rem;
+    margin-bottom: 0.25rem; // Minimal gap between subtitles
+  }
+  
+  &:last-child {
+    margin-bottom: 0.5rem; // Reduced bottom spacing for the last subtitle
+    
+    @include respond-to($breakpoint-md) {
+      margin-bottom: 0.75rem;
+    }
+    
+    @include respond-to($breakpoint-lg) {
+      margin-bottom: 1rem;
+    }
   }
 }
 
@@ -264,6 +307,10 @@ main {
   margin: 0.75rem 0; // Smaller margin on mobile
   padding: 0.75rem; // Smaller padding on mobile
   border: 1px solid $color-border; // Thinner border on mobile
+  
+  &:first-child {
+    margin-top: 0; // Remove top margin from first chapter
+  }
   
   @include respond-to($breakpoint-sm) {
     border-radius: 0.75rem;
@@ -472,6 +519,18 @@ h2 {
   
   @include respond-to($breakpoint-lg) {
     font-size: 1.75rem; // 28px on small laptops+
+  }
+  
+  &.subtitle {
+    margin-bottom: 0.125rem !important; // Override default h2 margins
+    
+    @include respond-to($breakpoint-md) {
+      margin-bottom: 0.25rem !important;
+    }
+    
+    @include respond-to($breakpoint-lg) {
+      margin-bottom: 0.25rem !important;
+    }
   }
 }
 
