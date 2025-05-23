@@ -145,6 +145,17 @@ export default function Home() {
           </nav>
         </div>
       </footer>
+
+      <footer className="copyright-footer" role="contentinfo">
+        <div className="container">
+          <p className="copyright-text">
+            Created by <strong>Elazar Pimentel</strong> (AKA Alessio Aguirre Pimentel)
+          </p>
+          <p className="copyright-text">
+            © {new Date().getFullYear()} All rights reserved. Protected by international copyright law and the Berne Convention.
+          </p>
+        </div>
+      </footer>
     </>
   );
 }
